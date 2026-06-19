@@ -3,9 +3,6 @@ import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
 import { prisma } from "@/lib/prisma";
 import { installSsrfGuard, preflightCheckUrl, isUrlHopSafe } from "@/lib/ssrf-guard";
-import { Site } from "@mdn/mdn-http-observatory/src/site.js";
-import { retrieve } from "@mdn/mdn-http-observatory/src/retriever/retriever.js";
-import { analyzeScan } from "@mdn/mdn-http-observatory/src/scanner/index.js";
 
 export const runtime = "nodejs";
 export const maxDuration = 30;
@@ -13,6 +10,11 @@ export const maxDuration = 30;
 installSsrfGuard();
 
 export async function POST(req: Request) {
+  const session = await getServerSession(authOptions);
+  const { Site } = await import("@mdn/mdn-http-observatory/src/site.js");
+  const { retrieve } = await import("@mdn/mdn-http-observatory/src/retriever/retriever.js");
+  const { analyzeScan } = await import("@mdn/mdn-http-observatory/src/scanner/index.js");
+
   const session = await getServerSession(authOptions);
 
   const { url } = await req.json();
