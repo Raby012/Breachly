@@ -51,11 +51,11 @@ export function isBlockedAddress(address: string): boolean {
  * inspecting the redirect chain after the request completes.
  */
 export function installSsrfGuard() {
-  // @ts-expect-error overriding overloaded signature intentionally
+  // @ts-ignore overriding overloaded signature intentionally
   dns.lookup = function (hostname: string, options: any, callback?: any) {
     const cb = typeof options === "function" ? options : callback;
     const opts = typeof options === "function" ? {} : options;
-    // @ts-expect-error
+    // @ts-ignore
     return originalLookup.call(dns, hostname, opts, (err: any, address: any, family: any) => {
       if (err) return cb(err, address, family);
       const list = Array.isArray(address) ? address : [{ address, family }];
@@ -71,7 +71,7 @@ export function installSsrfGuard() {
     });
   } as typeof dns.lookup;
 
-  // @ts-expect-error
+  // @ts-ignore
   dns.promises.lookup = async function (hostname: string, options?: any) {
     const result: any = await originalLookupPromise.call(dns.promises, hostname, options);
     const list = Array.isArray(result) ? result : [result];
