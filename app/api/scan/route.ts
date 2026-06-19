@@ -15,8 +15,6 @@ export async function POST(req: Request) {
   const { retrieve } = await import("@mdn/mdn-http-observatory/src/retriever/retriever.js");
   const { analyzeScan } = await import("@mdn/mdn-http-observatory/src/scanner/index.js");
 
-  const session = await getServerSession(authOptions);
-
   const { url } = await req.json();
   if (!url || typeof url !== "string") {
     return NextResponse.json({ error: "URL is required." }, { status: 400 });
