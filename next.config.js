@@ -1,8 +1,7 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   experimental: {
-    esmExternals: "loose",
+    serverComponentsExternalPackages: ["@mdn/mdn-http-observatory"],
   },
-  transpilePackages: ["@mdn/mdn-http-observatory", "http-cookie-agent"],
 };
 module.exports = nextConfig;
