@@ -72,8 +72,10 @@ export function installSsrfGuard() {
   } as typeof dns.lookup;
 
   // @ts-ignore
+// @ts-ignore
   dns.promises.lookup = async function (hostname: string, options?: any) {
-    const result: any = await originalLookupPromise.call(dns.promises, hostname, options);
+    const lookupFn: any = originalLookupPromise;
+    const result: any = await lookupFn.call(dns.promises, hostname, options);
     const list = Array.isArray(result) ? result : [result];
     for (const entry of list) {
       if (isBlockedAddress(entry.address)) {
