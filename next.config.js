@@ -1,7 +1,9 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  experimental: {
-    serverComponentsExternalPackages: ["@mdn/mdn-http-observatory", "pg", "pg-native"],
-  },
+  transpilePackages: [
+    "@mdn/mdn-http-observatory",
+    "http-cookie-agent",
+    "agent-base",
+  ],
 };
 module.exports = nextConfig;
